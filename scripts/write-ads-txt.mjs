@@ -2,19 +2,22 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT?.trim();
+/** Prefer env, otherwise the live Yardwise publisher ID. */
+const client =
+  process.env.NEXT_PUBLIC_ADSENSE_CLIENT?.trim() || "ca-pub-7233000824379127";
+
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outPath = join(root, "public", "ads.txt");
 
 mkdirSync(dirname(outPath), { recursive: true });
 
-if (!client || !/^ca-pub-\d+$/.test(client)) {
+if (!/^ca-pub-\d+$/.test(client)) {
   writeFileSync(
     outPath,
-    "# Add NEXT_PUBLIC_ADSENSE_CLIENT (ca-pub-…) before build to publish ads.txt\n",
+    "# Invalid NEXT_PUBLIC_ADSENSE_CLIENT; expected ca-pub-…\n",
     "utf8",
   );
-  console.log("ads.txt: placeholder (no AdSense client configured)");
+  console.log("ads.txt: invalid client, wrote placeholder");
   process.exit(0);
 }
 
