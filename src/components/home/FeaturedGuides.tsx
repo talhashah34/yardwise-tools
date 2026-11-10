@@ -43,21 +43,27 @@ export function FeaturedGuides() {
           </Link>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
-          {guides.map((guide) => (
+        <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
+          {guides.map((guide, index) => (
             <Link
               key={guide.href}
               href={guide.href}
-              className="group rounded-[14px] border border-border bg-card p-6 shadow-[var(--shadow-sm)] transition-shadow hover:shadow-[var(--shadow-md)]"
+              className="group relative overflow-hidden rounded-[16px] border border-border bg-card p-5 shadow-[var(--shadow-sm)] transition-shadow hover:shadow-[var(--shadow-md)] sm:p-6"
             >
-              <h3 className="text-lg text-deep-green group-hover:text-forest">
+              <span className="mb-4 inline-flex h-8 w-8 items-center justify-center rounded-[8px] bg-soft-sage font-[family-name:var(--font-manrope)] text-sm font-bold text-forest">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3 className="text-lg leading-snug text-deep-green group-hover:text-forest">
                 {guide.title}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-text-secondary">
                 {guide.description}
               </p>
-              <span className="mt-5 inline-block text-sm font-semibold text-clay">
+              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-clay">
                 Read guide
+                <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                  →
+                </span>
               </span>
             </Link>
           ))}

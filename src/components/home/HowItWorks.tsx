@@ -25,19 +25,21 @@ export function HowItWorks() {
       <div className="container-yardwise">
         <div className="mb-10 max-w-2xl">
           <h2 className="text-3xl text-deep-green md:text-4xl">How It Works</h2>
-          <p className="mt-3 text-text-secondary">
+          <p className="mt-3 text-[1.02rem] leading-relaxed text-text-secondary">
             Three simple steps from garden measurements to a shopping-ready estimate.
           </p>
         </div>
 
-        <ol className="grid gap-6 md:grid-cols-3">
+        <ol className="grid gap-4 sm:gap-6 md:grid-cols-3">
           {steps.map((step, index) => (
             <li
               key={step.title}
-              className="rounded-[20px] border border-border bg-card p-6 shadow-[var(--shadow-sm)]"
+              className="rounded-[20px] border border-border bg-card p-5 shadow-[var(--shadow-sm)] sm:p-6"
             >
               <div className="mb-5 flex items-center justify-between">
-                <step.icon />
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-[12px] bg-soft-sage">
+                  <step.icon />
+                </span>
                 <span className="font-[family-name:var(--font-manrope)] text-sm font-semibold text-sage">
                   Step {index + 1}
                 </span>

@@ -26,8 +26,8 @@ const tools = [
     title: "Pea Gravel Calculator",
     description:
       "Plan pea gravel paths and patios with coverage defaults tuned for smaller decorative stone.",
-    image: "/images/gravel-path.jpg",
-    imageAlt: "Fine gravel garden path",
+    image: "/images/pea-gravel.jpg",
+    imageAlt: "Close-up of smooth beige pea gravel among garden plants",
     cta: "Calculate Pea Gravel",
   },
   {
@@ -35,8 +35,8 @@ const tools = [
     title: "Gravel Driveway Calculator",
     description:
       "Estimate driveway gravel with deeper defaults, compaction allowance, and approximate weight.",
-    image: "/images/gravel-path.jpg",
-    imageAlt: "Gravel surface for driveway planning",
+    image: "/images/gravel-driveway.jpg",
+    imageAlt: "Residential gravel driveway leading to a garage",
     cta: "Calculate Driveway Gravel",
   },
 ];
@@ -49,19 +49,19 @@ export function FeaturedTools() {
           <h2 className="text-3xl text-deep-green md:text-4xl">
             Tools That Make Planning Easier
           </h2>
-          <p className="mt-3 text-text-secondary">
+          <p className="mt-3 text-[1.02rem] leading-relaxed text-text-secondary">
             Practical calculators for outdoor projects anywhere — mulch, soil, compost,
             and gravel in imperial or metric units.
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-5 md:space-y-6">
           {tools.map((tool) => (
             <article
               key={tool.href}
               className="overflow-hidden rounded-[20px] border border-border bg-card shadow-[var(--shadow-sm)] md:grid md:grid-cols-2"
             >
-              <div className="relative min-h-[220px]">
+              <div className="relative min-h-[200px] sm:min-h-[220px]">
                 <Image
                   src={tool.image}
                   alt={tool.imageAlt}
@@ -70,12 +70,19 @@ export function FeaturedTools() {
                   className="object-cover"
                 />
               </div>
-              <div className="flex flex-col justify-center p-6 md:p-8">
-                <h3 className="text-2xl text-deep-green">{tool.title}</h3>
-                <p className="mt-3 text-text-secondary">{tool.description}</p>
-                <div className="mt-6">
+              <div className="flex flex-col justify-center p-5 sm:p-6 md:p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-clay">
+                  Calculator
+                </p>
+                <h3 className="mt-2 text-[1.35rem] leading-snug text-deep-green sm:text-2xl">
+                  {tool.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-[0.95rem]">
+                  {tool.description}
+                </p>
+                <div className="mt-5 sm:mt-6">
                   <Link href={tool.href}>
-                    <Button>{tool.cta}</Button>
+                    <Button className="w-full sm:w-auto">{tool.cta}</Button>
                   </Link>
                 </div>
               </div>

@@ -53,8 +53,8 @@ const tools = [
     title: "Pea Gravel Calculator",
     description:
       "Estimate pea gravel for patios, paths, and decorative layers — tuned defaults for smaller stone coverage.",
-    image: "/images/gravel-path.jpg",
-    imageAlt: "Fine gravel path through a landscaped garden",
+    image: "/images/pea-gravel.jpg",
+    imageAlt: "Close-up of smooth beige pea gravel among garden plants",
     cta: "Open Pea Gravel Calculator",
   },
   {
@@ -62,8 +62,8 @@ const tools = [
     title: "Gravel Driveway Calculator",
     description:
       "Estimate driveway gravel with deeper defaults, compaction allowance, and approximate weight for bulk ordering.",
-    image: "/images/gravel-path.jpg",
-    imageAlt: "Gravel surface suitable for driveway planning estimates",
+    image: "/images/gravel-driveway.jpg",
+    imageAlt: "Residential gravel driveway leading to a garage",
     cta: "Open Driveway Calculator",
   },
 ];
@@ -74,20 +74,22 @@ export default function ToolsPage() {
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Calculators" }]} />
 
       <header className="mb-10 max-w-2xl">
-        <h1 className="text-4xl text-deep-green md:text-5xl">Calculators</h1>
-        <p className="mt-4 text-lg text-text-secondary">
+        <h1 className="text-[2.25rem] leading-tight text-deep-green sm:text-4xl md:text-5xl">
+          Calculators
+        </h1>
+        <p className="mt-4 text-base leading-relaxed text-text-secondary sm:text-lg">
           Practical landscaping material calculators for projects anywhere — imperial or
           metric, bags or bulk.
         </p>
       </header>
 
-      <div className="space-y-6">
+      <div className="space-y-5 md:space-y-6">
         {tools.map((tool) => (
           <article
             key={tool.href}
             className="overflow-hidden rounded-[20px] border border-border bg-card shadow-[var(--shadow-sm)] md:grid md:grid-cols-2"
           >
-            <div className="relative min-h-[220px]">
+            <div className="relative min-h-[200px] sm:min-h-[220px]">
               <Image
                 src={tool.image}
                 alt={tool.imageAlt}
@@ -96,15 +98,19 @@ export default function ToolsPage() {
                 className="object-cover"
               />
             </div>
-            <div className="flex flex-col justify-center p-6 md:p-8">
+            <div className="flex flex-col justify-center p-5 sm:p-6 md:p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-clay">
                 Available now
               </p>
-              <h2 className="mt-2 text-2xl text-deep-green">{tool.title}</h2>
-              <p className="mt-3 text-text-secondary">{tool.description}</p>
-              <div className="mt-6">
+              <h2 className="mt-2 text-[1.35rem] leading-snug text-deep-green sm:text-2xl">
+                {tool.title}
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-text-secondary sm:text-[0.95rem]">
+                {tool.description}
+              </p>
+              <div className="mt-5 sm:mt-6">
                 <Link href={tool.href}>
-                  <Button>{tool.cta}</Button>
+                  <Button className="w-full sm:w-auto">{tool.cta}</Button>
                 </Link>
               </div>
             </div>

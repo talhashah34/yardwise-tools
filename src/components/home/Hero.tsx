@@ -18,7 +18,7 @@ export function Hero() {
           <h1 className="text-balance text-4xl text-deep-green md:text-5xl lg:text-[3.25rem]">
             Get Your Garden Project Right. Before You Buy.
           </h1>
-          <p className="mt-5 max-w-lg text-base text-text-secondary md:text-lg">
+          <p className="mt-5 max-w-lg text-[1.05rem] leading-relaxed text-text-secondary md:text-lg md:leading-relaxed">
             Calculate mulch, soil, compost and gravel in imperial or metric units —
             practical tools for outdoor projects anywhere in the world.
           </p>
@@ -36,19 +36,22 @@ export function Hero() {
             </Link>
           </div>
 
-          <ul className="mt-8 flex flex-col gap-2 text-sm text-text-secondary sm:flex-row sm:flex-wrap sm:gap-x-6">
-            <li className="inline-flex items-center gap-2">
-              <TrustDot />
-              Easy-to-use calculators
-            </li>
-            <li className="inline-flex items-center gap-2">
-              <TrustDot />
-              Imperial and metric units
-            </li>
-            <li className="inline-flex items-center gap-2">
-              <TrustDot />
-              Practical material estimates
-            </li>
+          <ul className="mt-8 grid gap-2.5 sm:grid-cols-3 sm:gap-3">
+            {[
+              "Easy-to-use calculators",
+              "Imperial and metric units",
+              "Practical material estimates",
+            ].map((item) => (
+              <li
+                key={item}
+                className="inline-flex items-center gap-3 rounded-[12px] border border-border/80 bg-card/80 px-3.5 py-3 shadow-[var(--shadow-sm)] backdrop-blur-sm"
+              >
+                <TrustCheck />
+                <span className="text-sm font-medium leading-snug text-deep-green">
+                  {item}
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -93,11 +96,21 @@ export function Hero() {
   );
 }
 
-function TrustDot() {
+function TrustCheck() {
   return (
     <span
-      className="inline-block h-1.5 w-1.5 rounded-full bg-forest"
+      className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[8px] bg-soft-sage text-forest"
       aria-hidden="true"
-    />
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path
+          d="M3 7.2 5.8 10 11 4"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </span>
   );
 }
