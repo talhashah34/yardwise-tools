@@ -48,6 +48,16 @@ export default function PrivacyPolicyPage() {
           and browser information, and referral sources.
         </p>
 
+        <h2 className="pt-4 text-2xl text-deep-green">Affiliate links</h2>
+        <p>
+          Yardwise may include Amazon Associates and other affiliate links. If you buy
+          through those links, we may earn a commission at no extra cost to you. See our{" "}
+          <a href="/affiliate-disclosure" className="font-medium text-forest hover:underline">
+            Affiliate Disclosure
+          </a>{" "}
+          for details.
+        </p>
+
         <h2 className="pt-4 text-2xl text-deep-green">Cookies and advertising</h2>
         <p>
           Yardwise may show Google AdSense display ads when a publisher ID is configured

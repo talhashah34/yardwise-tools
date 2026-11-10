@@ -12,9 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/topsoil-calculator",
     "/tools/compost-calculator",
     "/tools/gravel-calculator",
+    "/tools/pea-gravel-calculator",
+    "/tools/gravel-driveway-calculator",
     "/guides",
     "/about",
     "/contact",
+    "/affiliate-disclosure",
     "/privacy-policy",
     "/terms",
   ];
