@@ -34,36 +34,36 @@ function calculatorCtaForGuide(slug: string): { href: string; label: string } {
   if (slug.includes("driveway")) {
     return {
       href: "/tools/gravel-driveway-calculator",
-      label: "Open the Gravel Driveway Calculator \u2192",
+      label: "Open the Gravel Driveway Calculator →",
     };
   }
   if (slug.includes("pea-gravel")) {
     return {
       href: "/tools/pea-gravel-calculator",
-      label: "Open the Pea Gravel Calculator \u2192",
+      label: "Open the Pea Gravel Calculator →",
     };
   }
   if (slug.includes("gravel") || slug.includes("patio") || slug.includes("crushed-stone")) {
     return {
       href: "/tools/gravel-calculator",
-      label: "Open the Gravel Calculator \u2192",
+      label: "Open the Gravel Calculator →",
     };
   }
   if (slug.includes("compost")) {
     return {
       href: "/tools/compost-calculator",
-      label: "Open the Compost Calculator \u2192",
+      label: "Open the Compost Calculator →",
     };
   }
   if (slug.includes("topsoil") || slug.includes("fill-dirt") || slug.includes("raised-bed") || slug.includes("soil")) {
     return {
       href: "/tools/topsoil-calculator",
-      label: "Open the Topsoil Calculator \u2192",
+      label: "Open the Topsoil Calculator →",
     };
   }
   return {
     href: "/tools/mulch-calculator",
-    label: "Open the Mulch Calculator \u2192",
+    label: "Open the Mulch Calculator →",
   };
 }
 
