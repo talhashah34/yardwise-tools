@@ -45,16 +45,17 @@ export const siteConfig = {
     ],
     guides: [
       { label: "How Much Mulch Do I Need?", href: "/guides/how-much-mulch-do-i-need" },
-      { label: "How Much Topsoil Do I Need?", href: "/guides/how-much-topsoil-do-i-need" },
-      { label: "How Much Gravel Do I Need?", href: "/guides/how-much-gravel-do-i-need" },
+      { label: "Mulch for Flower Beds", href: "/guides/how-much-mulch-for-flower-beds" },
+      { label: "Fill Dirt vs Topsoil", href: "/guides/fill-dirt-vs-topsoil" },
       {
-        label: "How Many Tons of Gravel?",
-        href: "/guides/how-many-tons-of-gravel-do-i-need",
+        label: "Gravel Driveway Depth",
+        href: "/guides/how-deep-should-a-gravel-driveway-be",
       },
     ],
     company: [
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
+      { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
       { label: "Privacy Policy", href: "/privacy-policy" },
       { label: "Terms of Use", href: "/terms" },
     ],
