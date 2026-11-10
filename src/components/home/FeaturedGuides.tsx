@@ -2,22 +2,22 @@ import Link from "next/link";
 
 const guides = [
   {
-    href: "/guides/how-much-mulch-do-i-need",
-    title: "How Much Mulch Do I Need?",
+    href: "/guides/how-much-mulch-for-flower-beds",
+    title: "How Much Mulch for Flower Beds?",
     description:
-      "Learn the volume formula in imperial and metric, then convert to bags.",
+      "U.S. cubic-yard formula, bag counts, and depth tips for flower beds.",
   },
   {
-    href: "/guides/how-many-tons-of-gravel-do-i-need",
-    title: "How Many Tons of Gravel Do I Need?",
+    href: "/guides/how-deep-should-a-gravel-driveway-be",
+    title: "How Deep Should a Gravel Driveway Be?",
     description:
-      "Convert gravel volume to approximate tons or tonnes for bulk orders.",
+      "Base and surface depths for American driveways, plus yards-to-tons planning.",
   },
   {
-    href: "/guides/bags-vs-bulk-landscaping-materials",
-    title: "Bags vs Bulk Landscaping Materials",
+    href: "/guides/fill-dirt-vs-topsoil",
+    title: "Fill Dirt vs Topsoil",
     description:
-      "Choose bagged or bulk with a simple volume-and-logistics checklist.",
+      "Know what to buy for grading vs planting — and calculate cubic yards first.",
   },
 ];
 
@@ -31,8 +31,8 @@ export function FeaturedGuides() {
               Plan Your Next Garden Project
             </h2>
             <p className="mt-3 text-text-secondary">
-              Short, practical guides that answer the questions behind the calculator —
-              written for projects worldwide.
+              Short, practical U.S.-focused guides that answer the questions behind the
+              calculator — with clear next steps to estimate materials.
             </p>
           </div>
           <Link
@@ -43,27 +43,21 @@ export function FeaturedGuides() {
           </Link>
         </div>
 
-        <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
-          {guides.map((guide, index) => (
+        <div className="grid gap-5 md:grid-cols-3">
+          {guides.map((guide) => (
             <Link
               key={guide.href}
               href={guide.href}
-              className="group relative overflow-hidden rounded-[16px] border border-border bg-card p-5 shadow-[var(--shadow-sm)] transition-shadow hover:shadow-[var(--shadow-md)] sm:p-6"
+              className="group rounded-[14px] border border-border bg-card p-6 shadow-[var(--shadow-sm)] transition-shadow hover:shadow-[var(--shadow-md)]"
             >
-              <span className="mb-4 inline-flex h-8 w-8 items-center justify-center rounded-[8px] bg-soft-sage font-[family-name:var(--font-manrope)] text-sm font-bold text-forest">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className="text-lg leading-snug text-deep-green group-hover:text-forest">
+              <h3 className="text-lg text-deep-green group-hover:text-forest">
                 {guide.title}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-text-secondary">
                 {guide.description}
               </p>
-              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-clay">
+              <span className="mt-5 inline-block text-sm font-semibold text-clay">
                 Read guide
-                <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
-                  →
-                </span>
               </span>
             </Link>
           ))}
