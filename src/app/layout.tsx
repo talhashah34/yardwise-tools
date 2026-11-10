@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/Header";
 import { siteConfig } from "@/config/site";
 import { createMetadata } from "@/lib/seo/metadata";
 import { Analytics } from "@/components/analytics/Analytics";
+import { AdSenseScript } from "@/components/ads/AdSenseScript";
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
@@ -28,9 +29,6 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
-  verification: {
-    google: "7Qs7NzKWGfM63wlFkGvH32uAmvoKYaM9vL7SfyZBHzU",
-  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -53,6 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <AdSenseScript />
         <Analytics />
       </body>
     </html>

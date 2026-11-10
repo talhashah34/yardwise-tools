@@ -50,9 +50,11 @@ export default function PrivacyPolicyPage() {
 
         <h2 className="pt-4 text-2xl text-deep-green">Cookies and advertising</h2>
         <p>
-          The initial release does not integrate advertising networks. If advertising
-          or additional cookies are introduced later, this policy will be updated and an
-          appropriate consent approach will be considered for applicable jurisdictions.
+          Yardwise may show Google AdSense display ads when a publisher ID is configured
+          for the deployment. AdSense and related Google services may use cookies or
+          similar technologies to serve and measure ads. You can manage ad personalization
+          through Google&apos;s ad settings. If AdSense is not configured, no ad scripts are
+          loaded. Additional consent tooling may be added later for applicable jurisdictions.
         </p>
 
         <h2 className="pt-4 text-2xl text-deep-green">Contact</h2>

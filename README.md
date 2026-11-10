@@ -42,7 +42,10 @@ This project is set up for **Netlify Free** static hosting (not Cursor hosting).
    - **Publish directory:** `out`
 4. Optional environment variables:
    - `NEXT_PUBLIC_SITE_URL` — your live Netlify URL (for canonical/OG links)
-   - `NEXT_PUBLIC_GA_MEASUREMENT_ID` — GA4 ID only when you are ready for analytics
+   - `NEXT_PUBLIC_GA_MEASUREMENT_ID` — GA4 ID (`G-…`); optional override of the built-in default
+   - `NEXT_PUBLIC_ADSENSE_CLIENT` — AdSense publisher ID (`ca-pub-…`); required to load ads
+   - `NEXT_PUBLIC_ADSENSE_SLOT_CALCULATOR` — display slot ID under calculator pages
+   - `NEXT_PUBLIC_ADSENSE_SLOT_GUIDE` — display slot ID under guide articles
 
 After the first deploy, set `NEXT_PUBLIC_SITE_URL` to your real `https://….netlify.app` (or custom domain) and redeploy so sitemap/canonical URLs match.
 
