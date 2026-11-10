@@ -1,12 +1,14 @@
 import Script from "next/script";
 
 /**
- * Prefer Google Tag Manager when NEXT_PUBLIC_GTM_ID is set (GTM-…).
- * Otherwise load GA4 directly when NEXT_PUBLIC_GA_MEASUREMENT_ID is set (G-…).
- * Defaults to the live Yardwise GTM container so Netlify works without env setup.
+ * Loads GA4 when a measurement ID is available.
+ * Defaults to the live Yardwise property so Netlify works without env setup.
+ * Optional override: NEXT_PUBLIC_GA_MEASUREMENT_ID
+ * Optional GTM: NEXT_PUBLIC_GTM_ID (takes precedence when set)
  */
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-NNMNFD4X";
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-FC7S4SLTS7";
 
 export function Analytics() {
   if (GTM_ID) {
