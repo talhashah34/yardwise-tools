@@ -75,7 +75,13 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container-yardwise flex flex-col gap-2 py-5 text-xs text-sage sm:flex-row sm:items-center sm:justify-between">
           <p>© {COPYRIGHT_YEAR} Yardwise. All rights reserved.</p>
-          <p>Material estimates for planning purposes — verify with your supplier.</p>
+          <p>
+            As an Amazon Associate we earn from qualifying purchases.{" "}
+            <Link href="/affiliate-disclosure" className="underline hover:text-white">
+              Disclosure
+            </Link>
+            . Estimates are for planning — verify with your supplier.
+          </p>
         </div>
       </div>
     </footer>
