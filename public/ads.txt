@@ -1,0 +1,1 @@
+# Add NEXT_PUBLIC_ADSENSE_CLIENT (ca-pub-…) before build to publish ads.txt
