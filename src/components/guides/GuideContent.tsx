@@ -1,7 +1,71 @@
 import { AdUnit } from "@/components/ads/AdUnit";
+import { AffiliateProducts } from "@/components/affiliates/AffiliateProducts";
 import type { Guide } from "@/content/guides";
 import Link from "next/link";
 import type { ReactNode } from "react";
+
+function affiliateCollectionForGuide(slug: string) {
+  if (
+    slug.includes("gravel") ||
+    slug.includes("driveway") ||
+    slug.includes("tons") ||
+    slug.includes("patio") ||
+    slug.includes("crushed-stone") ||
+    slug.includes("pea-gravel")
+  ) {
+    return "gravel" as const;
+  }
+  if (
+    slug.includes("topsoil") ||
+    slug.includes("compost") ||
+    slug.includes("soil") ||
+    slug.includes("fill-dirt") ||
+    slug.includes("raised-bed")
+  ) {
+    return "soil" as const;
+  }
+  if (slug.includes("mulch") || slug.includes("bag") || slug.includes("flower-bed")) {
+    return "mulch" as const;
+  }
+  return "general" as const;
+}
+
+function calculatorCtaForGuide(slug: string): { href: string; label: string } {
+  if (slug.includes("driveway")) {
+    return {
+      href: "/tools/gravel-driveway-calculator",
+      label: "Open the Gravel Driveway Calculator \u2192",
+    };
+  }
+  if (slug.includes("pea-gravel")) {
+    return {
+      href: "/tools/pea-gravel-calculator",
+      label: "Open the Pea Gravel Calculator \u2192",
+    };
+  }
+  if (slug.includes("gravel") || slug.includes("patio") || slug.includes("crushed-stone")) {
+    return {
+      href: "/tools/gravel-calculator",
+      label: "Open the Gravel Calculator \u2192",
+    };
+  }
+  if (slug.includes("compost")) {
+    return {
+      href: "/tools/compost-calculator",
+      label: "Open the Compost Calculator \u2192",
+    };
+  }
+  if (slug.includes("topsoil") || slug.includes("fill-dirt") || slug.includes("raised-bed") || slug.includes("soil")) {
+    return {
+      href: "/tools/topsoil-calculator",
+      label: "Open the Topsoil Calculator \u2192",
+    };
+  }
+  return {
+    href: "/tools/mulch-calculator",
+    label: "Open the Mulch Calculator \u2192",
+  };
+}
 
 /**
  * Lightweight Markdown-ish renderer for guide content.
@@ -9,6 +73,7 @@ import type { ReactNode } from "react";
  */
 export function GuideContent({ guide }: { guide: Guide }) {
   const blocks = parseBlocks(guide.content);
+  const cta = calculatorCtaForGuide(guide.slug);
 
   return (
     <article className="mx-auto max-w-3xl">
@@ -29,15 +94,21 @@ export function GuideContent({ guide }: { guide: Guide }) {
       <aside className="mt-12 rounded-[20px] border border-border bg-soft-sage/50 p-6">
         <h2 className="text-xl text-deep-green">Ready to calculate?</h2>
         <p className="mt-2 text-text-secondary">
-          Put these formulas to work with live estimates for bags and bulk deliveries.
+          Put these U.S. planning formulas to work with live cubic-yard, bag, and bulk estimates.
         </p>
         <Link
-          href="/tools/mulch-calculator"
+          href={cta.href}
           className="mt-4 inline-flex font-semibold text-forest hover:text-deep-green"
         >
-          Open the Mulch Calculator →
+          {cta.label}
         </Link>
       </aside>
+
+      <AffiliateProducts
+        collection={affiliateCollectionForGuide(guide.slug)}
+        className="mt-10"
+        title="Helpful tools for this project"
+      />
 
       <AdUnit slot="guide" className="mt-10" />
     </article>
@@ -198,11 +269,31 @@ function renderInline(text: string): ReactNode[] {
       if (linkMatch) {
         const href = linkMatch[2]!;
         const label = linkMatch[1]!;
-        parts.push(
-          <Link key={`${match.index}-a`} href={href} className="font-medium text-forest underline-offset-2 hover:underline">
-            {label}
-          </Link>,
-        );
+        const external = /^https?:\/\//i.test(href);
+        const amazon = /amazon\.com/i.test(href);
+        if (external) {
+          parts.push(
+            <a
+              key={`${match.index}-a`}
+              href={href}
+              target="_blank"
+              rel={amazon ? "nofollow sponsored noopener noreferrer" : "noopener noreferrer"}
+              className="font-medium text-forest underline-offset-2 hover:underline"
+            >
+              {label}
+            </a>,
+          );
+        } else {
+          parts.push(
+            <Link
+              key={`${match.index}-a`}
+              href={href}
+              className="font-medium text-forest underline-offset-2 hover:underline"
+            >
+              {label}
+            </Link>,
+          );
+        }
       }
     }
     lastIndex = match.index + token.length;
