@@ -1,13 +1,14 @@
 import { CalculatorSeoSection } from "@/components/calculator/CalculatorSeoSection";
 import { PeaGravelCalculator } from "@/components/calculator/PeaGravelCalculator";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { calculatorSeoContent } from "@/config/calculator-seo";
 import { createMetadata } from "@/lib/seo/metadata";
 import { siteConfig } from "@/config/site";
 
 export const metadata = createMetadata({
   title: "Pea Gravel Calculator – How Much Pea Gravel Do You Need? | Yardwise",
   description:
-    "Free pea gravel calculator for paths, patios, and decorative beds. Get cubic yards or cubic metres, bag counts, and approximate tons or tonnes.",
+    "Free U.S. pea gravel calculator. Estimate cubic yards, bags, and approximate weight for walkways, patios, and decorative fills.",
   path: "/tools/pea-gravel-calculator",
 });
 
@@ -20,7 +21,7 @@ const jsonLd = {
   operatingSystem: "Any",
   inLanguage: ["en"],
   description:
-    "Calculate how much pea gravel you need in cubic yards, cubic metres, bags, and approximate weight.",
+    "Calculate how much pea gravel you need in cubic yards, bags, and approximate weight.",
   offers: {
     "@type": "Offer",
     price: "0",
@@ -47,21 +48,7 @@ export default function PeaGravelCalculatorPage() {
       </div>
 
       <PeaGravelCalculator />
-
-      <CalculatorSeoSection
-        materialLabel="pea gravel"
-        calculatorName="Pea Gravel Calculator"
-        guideHref="/guides/how-much-pea-gravel-do-i-need"
-        guideLabel="How Much Pea Gravel Do I Need?"
-        extraNotes={["weight"]}
-        related={[
-          { href: "/tools/gravel-calculator", label: "Gravel Calculator" },
-          {
-            href: "/tools/gravel-driveway-calculator",
-            label: "Gravel Driveway Calculator",
-          },
-        ]}
-      />
+      <CalculatorSeoSection content={calculatorSeoContent["pea-gravel"]} />
     </div>
   );
 }

@@ -1,13 +1,14 @@
 import { CalculatorSeoSection } from "@/components/calculator/CalculatorSeoSection";
 import { DrivewayGravelCalculator } from "@/components/calculator/DrivewayGravelCalculator";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { calculatorSeoContent } from "@/config/calculator-seo";
 import { createMetadata } from "@/lib/seo/metadata";
 import { siteConfig } from "@/config/site";
 
 export const metadata = createMetadata({
-  title: "Gravel Driveway Calculator – How Much Gravel for a Driveway? | Yardwise",
+  title: "Gravel Driveway Calculator – Tons & Cubic Yards | Yardwise",
   description:
-    "Free gravel driveway calculator. Estimate cubic yards or cubic metres, bags for repairs, and approximate tons or tonnes for bulk orders worldwide.",
+    "Free U.S. gravel driveway calculator. Estimate cubic yards and approximate tons for driveway base and surface layers.",
   path: "/tools/gravel-driveway-calculator",
 });
 
@@ -20,7 +21,7 @@ const jsonLd = {
   operatingSystem: "Any",
   inLanguage: ["en"],
   description:
-    "Calculate how much gravel a driveway needs in cubic yards, cubic metres, and approximate weight.",
+    "Calculate driveway gravel needs in cubic yards, bags, and approximate tons.",
   offers: {
     "@type": "Offer",
     price: "0",
@@ -28,7 +29,7 @@ const jsonLd = {
   },
 };
 
-export default function GravelDrivewayCalculatorPage() {
+export default function DrivewayGravelCalculatorPage() {
   return (
     <div className="container-yardwise py-10 md:py-14">
       <script
@@ -47,22 +48,7 @@ export default function GravelDrivewayCalculatorPage() {
       </div>
 
       <DrivewayGravelCalculator />
-
-      <CalculatorSeoSection
-        materialLabel="driveway gravel"
-        calculatorName="Gravel Driveway Calculator"
-        guideHref="/guides/gravel-driveway-how-much-do-i-need"
-        guideLabel="How Much Gravel for a Driveway?"
-        extraNotes={["weight"]}
-        related={[
-          { href: "/tools/gravel-calculator", label: "Gravel Calculator" },
-          { href: "/tools/pea-gravel-calculator", label: "Pea Gravel Calculator" },
-          {
-            href: "/guides/how-many-tons-of-gravel-do-i-need",
-            label: "How Many Tons of Gravel Do I Need?",
-          },
-        ]}
-      />
+      <CalculatorSeoSection content={calculatorSeoContent.driveway} />
     </div>
   );
 }
