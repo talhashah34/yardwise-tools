@@ -1,5 +1,5 @@
 /**
- * AdSense loads when a ca-pub publisher ID is available.
+ * AdSense stays off until NEXT_PUBLIC_ADSENSE_CLIENT is set (ca-pub-…).
  * Optional slot IDs enable specific display units after you create them in AdSense.
  */
 export const adsConfig = {
