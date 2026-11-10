@@ -3,7 +3,7 @@ export const siteConfig = {
   tagline: "Smarter planning for better outdoor spaces.",
   description:
     "Global landscaping calculators for mulch, topsoil, compost, and gravel. Estimate quantities in imperial or metric units, compare bagged vs bulk, and plan outdoor projects with practical guides.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://yardwise.netlify.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://yardwise-app.netlify.app",
   locale: "en_US",
   creator: "Yardwise",
   keywords: [
