@@ -1,8 +1,46 @@
 import { AdUnit } from "@/components/ads/AdUnit";
 import { AffiliateProducts } from "@/components/affiliates/AffiliateProducts";
 import type { Guide } from "@/content/guides";
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+
+function coverImageForGuide(slug: string) {
+  if (
+    slug.includes("gravel") ||
+    slug.includes("driveway") ||
+    slug.includes("tons") ||
+    slug.includes("patio") ||
+    slug.includes("pea-gravel")
+  ) {
+    return {
+      src: "/images/gravel-path.jpg",
+      alt: "Gravel path and driveway landscaping materials",
+    };
+  }
+  if (
+    slug.includes("topsoil") ||
+    slug.includes("compost") ||
+    slug.includes("soil") ||
+    slug.includes("fill-dirt") ||
+    slug.includes("raised-bed")
+  ) {
+    return {
+      src: "/images/compost-soil.jpg",
+      alt: "Topsoil and compost ready for garden beds",
+    };
+  }
+  if (slug.includes("mulch") || slug.includes("flower-bed")) {
+    return {
+      src: "/images/mulch-beds.jpg",
+      alt: "Mulched garden and flower beds",
+    };
+  }
+  return {
+    src: "/images/hero-garden.jpg",
+    alt: "Outdoor landscaping project planning",
+  };
+}
 
 function affiliateCollectionForGuide(slug: string) {
   if (
@@ -74,6 +112,7 @@ function calculatorCtaForGuide(slug: string): { href: string; label: string } {
 export function GuideContent({ guide }: { guide: Guide }) {
   const blocks = parseBlocks(guide.content);
   const cta = calculatorCtaForGuide(guide.slug);
+  const cover = coverImageForGuide(guide.slug);
 
   return (
     <article className="mx-auto max-w-3xl">
@@ -83,6 +122,16 @@ export function GuideContent({ guide }: { guide: Guide }) {
         </p>
         <h1 className="mt-3 text-4xl text-deep-green md:text-5xl">{guide.title}</h1>
         <p className="mt-4 text-lg text-text-secondary">{guide.description}</p>
+        <div className="relative mt-6 aspect-[16/10] overflow-hidden rounded-[20px] bg-subtle">
+          <Image
+            src={cover.src}
+            alt={cover.alt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 768px"
+            priority
+          />
+        </div>
       </header>
 
       <div className="space-y-5 text-[1.05rem] leading-relaxed text-text">
