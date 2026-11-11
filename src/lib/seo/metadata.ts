@@ -9,31 +9,40 @@ export function createMetadata({
   path = "/",
   noIndex = false,
   image = defaultOgImage,
+  type = "website",
+  publishedTime,
+  modifiedTime,
+  authors,
 }: {
   title: string;
   description: string;
   path?: string;
   noIndex?: boolean;
   image?: string;
+  type?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  authors?: string[];
 }): Metadata {
   const url = `${siteConfig.url}${path}`;
   const fullTitle =
     title === siteConfig.name
       ? `${siteConfig.name} | Landscaping Calculators & Material Estimators`
       : title;
+  const articleAuthors = authors?.length ? authors : [siteConfig.creator];
 
   return {
     title: fullTitle,
     description,
     keywords: [...siteConfig.keywords],
-    authors: [{ name: siteConfig.creator }],
+    authors: articleAuthors.map((name) => ({ name })),
     creator: siteConfig.creator,
     metadataBase: new URL(siteConfig.url),
     alternates: {
       canonical: url,
     },
     openGraph: {
-      type: "website",
+      type,
       locale: siteConfig.locale,
       url,
       title: fullTitle,
@@ -47,6 +56,13 @@ export function createMetadata({
           alt: fullTitle,
         },
       ],
+      ...(type === "article"
+        ? {
+            publishedTime: publishedTime ?? modifiedTime,
+            modifiedTime,
+            authors: articleAuthors,
+          }
+        : {}),
     },
     twitter: {
       card: "summary_large_image",

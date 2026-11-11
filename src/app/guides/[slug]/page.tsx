@@ -17,6 +17,10 @@ export async function generateMetadata({ params }: PageProps<"/guides/[slug]">) 
     title: `${guide.title} | Yardwise`,
     description: guide.description,
     path: `/guides/${guide.slug}`,
+    type: "article",
+    publishedTime: guide.updated,
+    modifiedTime: guide.updated,
+    authors: [siteConfig.name],
   });
 }
 
