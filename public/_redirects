@@ -1,0 +1,2 @@
+# Cloudflare Pages: SPA-style fallback is not needed for static multi-page export.
+# Keep file present so Pages recognizes static routing conventions.

@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Static export keeps hosting on Netlify Free simple and dependency-free.
+  // Static export works on Cloudflare Pages, Netlify, and GitHub Pages.
   output: "export",
   images: {
     unoptimized: true,
