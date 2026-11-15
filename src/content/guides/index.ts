@@ -1,45 +1,40 @@
+export type { Guide, GuideCategory, GuideFaq } from "./types";
 import { part0 } from "./part0";
 import { part1 } from "./part1";
 import { part2 } from "./part2";
 import { part3 } from "./part3";
 import { part4 } from "./part4";
 import { part5 } from "./part5";
-import type { Guide, GuideCategory } from "./types";
+import { guideFaqs } from "./faqs";
 
-export type { Guide, GuideCategory } from "./types";
-export { guideFaqs, type GuideFaq } from "./faqs";
-
-export const guides: Guide[] = [...part0, ...part1, ...part2, ...part3, ...part4, ...part5];
-
-const bySlug = new Map(guides.map((guide) => [guide.slug, guide]));
-
-export function getGuide(slug: string) {
-  return bySlug.get(slug);
+function withFaqs<T extends { slug: string; faqs?: import("./types").GuideFaq[] }>(guide: T): T {
+  if (guide.faqs?.length) return guide;
+  const faqs = guideFaqs[guide.slug];
+  return faqs ? { ...guide, faqs } : guide;
 }
 
-export function getGuidesByCategory(category: GuideCategory) {
+export const guides = [...part0, ...part1, ...part2, ...part3, ...part4, ...part5].map(withFaqs);
+
+export function getGuide(slug: string) {
+  return guides.find((guide) => guide.slug === slug);
+}
+
+export function getAllGuideSlugs(): string[] {
+  return guides.map((guide) => guide.slug);
+}
+
+export function getGuidesByCategory(category: import("./types").GuideCategory) {
   return guides.filter((guide) => guide.category === category);
 }
 
-export function getFeaturedGuides(limit = 6) {
-  return guides.slice(0, limit);
-}
-
-export function getComparisonGuides() {
-  return guides.filter((guide) => guide.category === "comparisons");
-}
-
-export function getRelatedGuides(slug: string, limit = 4) {
-  const current = bySlug.get(slug);
-  if (!current) return guides.filter((g) => g.slug !== slug).slice(0, limit);
-
+export function getRelatedGuides(slug: string, limit = 6) {
+  const current = getGuide(slug);
+  if (!current) return [];
   const sameCategory = guides.filter(
-    (g) => g.slug !== slug && g.category === current.category,
+    (guide) => guide.slug !== slug && guide.category === current.category,
   );
-  if (sameCategory.length >= limit) return sameCategory.slice(0, limit);
-
-  const rest = guides.filter(
-    (g) => g.slug !== slug && g.category !== current.category,
+  const others = guides.filter(
+    (guide) => guide.slug !== slug && guide.category !== current.category,
   );
-  return [...sameCategory, ...rest].slice(0, limit);
+  return [...sameCategory, ...others].slice(0, limit);
 }
