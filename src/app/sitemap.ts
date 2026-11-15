@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/pea-gravel-calculator",
     "/tools/gravel-driveway-calculator",
     "/guides",
+    "/guides/comparisons",
     "/about",
     "/contact",
     "/affiliate-disclosure",
@@ -34,13 +35,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
           ? 1
           : path.includes("-calculator")
             ? 0.9
-            : 0.7,
+            : path === "/guides"
+              ? 0.85
+              : 0.7,
     })),
     ...guides.map((guide) => ({
       url: `${siteConfig.url}/guides/${guide.slug}`,
       lastModified: new Date(guide.updated),
       changeFrequency: "monthly" as const,
-      priority: 0.6,
+      priority: guide.category === "comparisons" ? 0.75 : 0.65,
     })),
   ];
 }
