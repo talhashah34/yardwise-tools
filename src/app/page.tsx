@@ -9,7 +9,7 @@ import { createMetadata } from "@/lib/seo/metadata";
 export const metadata = createMetadata({
   title: "Yardwise",
   description:
-    "Plan your landscaping projects with practical calculators for mulch and other garden materials. Estimate quantities, compare purchase options and make informed decisions.",
+    "Free home and yard calculators plus comparison guides for mulch, gravel, soil, lawns, patios, fencing, and DIY material estimates.",
   path: "/",
 });
 
