@@ -1,10 +1,19 @@
-export interface Guide {
+export type GuideCategory =
+  | "materials"
+  | "outdoor"
+  | "lawn"
+  | "comparisons"
+  | "home-decor"
+  | "kitchen"
+  | "planning";
+
+export type Guide = {
   slug: string;
   title: string;
   description: string;
-  keywords: string[];
+  category: GuideCategory;
   readingTime: string;
   updated: string;
-  content: string;
-}
-
+  sections: { heading: string; body: string[] }[];
+  relatedTools?: { label: string; href: string }[];
+};
