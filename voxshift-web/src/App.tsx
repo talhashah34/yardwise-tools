@@ -58,8 +58,7 @@ export default function App() {
   function assign(slot: Slot, file: File | null) {
     setError(null);
     if (file && !isMediaFile(file)) {
-      setError("Please upload an audio or video file (WAV, MP3, M4A, OGG, WebM…)."
-);
+      setError("Please upload an audio or video file (WAV, MP3, M4A, OGG, WebM\u2026).");
       return;
     }
     if (slot === "target") setTarget(file);
@@ -78,7 +77,7 @@ export default function App() {
     setBusy(true);
     setError(null);
     setProgressPct(5);
-    setProgressLabel("Reading clips…");
+    setProgressLabel("Reading clips\u2026");
     try {
       const { blob } = await convertVoice({
         targetFile: target,
@@ -239,7 +238,7 @@ export default function App() {
               disabled={!target || !content || busy}
               onClick={runConvert}
             >
-              {busy ? "Converting…" : "Convert voice"}
+              {busy ? "Converting\u2026" : "Convert voice"}
             </button>
             {resultUrl && (
               <button className="btn btn-ghost" type="button" onClick={download}>
@@ -340,7 +339,7 @@ export default function App() {
                 >
                   <span>{item.q}</span>
                   <span className="faq-chevron" aria-hidden="true">
-                    {open ? "−" : "+"}
+                    {open ? "\u2212" : "+"}
                   </span>
                 </button>
                 {open && <p className="faq-answer">{item.a}</p>}
