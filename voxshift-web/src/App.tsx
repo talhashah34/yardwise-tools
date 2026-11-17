@@ -1,1 +1,1 @@
-LOAD_FROM_/tmp/PUSH_NOW.json
+LOAD_FROM_/tmp/push_app_content.txt
