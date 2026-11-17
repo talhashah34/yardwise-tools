@@ -1,7 +1,6 @@
-/** Embedded demo clips so preview works even before static assets sync. */
-import { contentSample } from "./demoSampleContent";
-import { targetSample } from "./demoSampleTarget";
-import { resultSample } from "./demoSampleResult";
+import { contentSample } from "./contentSample";
+import { targetSample } from "./targetSample";
+import { resultSample } from "./resultSample";
 
 export const demoSamples = {
   content: contentSample,
