@@ -396,7 +396,7 @@ export default function App() {
         </div>
       </section>
 
-      <section className="section" id="studio">
+      <section className="section section-studio" id="studio">
         <div className="section-head">
           <h2>Swap Studio</h2>
           <p>
@@ -405,109 +405,119 @@ export default function App() {
           </p>
         </div>
 
-        <div className="studio">
-          <div className="studio-grid">
-            <label
-              className={`drop${drag === "target" ? " drag" : ""}`}
-              onDragOver={(e) => {
-                e.preventDefault();
-                setDrag("target");
-              }}
-              onDragLeave={() => setDrag(null)}
-              onDrop={(e) => onDrop("target", e)}
-            >
-              <div>
-                <h3>1 · Target voice</h3>
-                <p>The voice you want to sound like. Clear speech, 5–20 seconds works best.</p>
-              </div>
-              {target ? (
-                <span className="file-chip">
-                  {target.name} · {formatBytes(target.size)}
-                </span>
-              ) : (
-                <span className="file-chip">Drop audio or click to browse</span>
-              )}
-              <input
-                type="file"
-                accept="audio/*,video/*,.wav,.mp3,.m4a,.ogg,.webm"
-                onChange={(e) => assign("target", e.target.files?.[0] ?? null)}
-              />
-            </label>
-
-            <div className="swap-arrow" aria-hidden="true">
-              <span>→</span>
-            </div>
-
-            <label
-              className={`drop${drag === "content" ? " drag" : ""}`}
-              onDragOver={(e) => {
-                e.preventDefault();
-                setDrag("content");
-              }}
-              onDragLeave={() => setDrag(null)}
-              onDrop={(e) => onDrop("content", e)}
-            >
-              <div>
-                <h3>2 · Content clip</h3>
-                <p>The words and timing you want to keep. This is the performance that gets re-voiced.</p>
-              </div>
-              {content ? (
-                <span className="file-chip">
-                  {content.name} · {formatBytes(content.size)}
-                </span>
-              ) : (
-                <span className="file-chip">Drop audio or click to browse</span>
-              )}
-              <input
-                type="file"
-                accept="audio/*,video/*,.wav,.mp3,.m4a,.ogg,.webm"
-                onChange={(e) => assign("content", e.target.files?.[0] ?? null)}
-              />
-            </label>
+        <div className="studio-shell">
+          <div className="studio-rail studio-rail-left">
+            <AdSlot slot="vox-studio-left-rail" format="rail" label="Advertisement · left of studio" />
           </div>
 
-          <div className="studio-actions">
-            <button
-              className="btn btn-primary"
-              type="button"
-              disabled={!target || !content || busy}
-              onClick={runConvert}
-            >
-              {busy ? "Converting…" : "Convert voice"}
-            </button>
-            {resultUrl && (
-              <button className="btn btn-ghost" type="button" onClick={download}>
-                Download WAV
+          <div className="studio">
+            <div className="studio-grid">
+              <label
+                className={`drop${drag === "target" ? " drag" : ""}`}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setDrag("target");
+                }}
+                onDragLeave={() => setDrag(null)}
+                onDrop={(e) => onDrop("target", e)}
+              >
+                <div>
+                  <h3>1 · Target voice</h3>
+                  <p>The voice you want to sound like. Clear speech, 5–20 seconds works best.</p>
+                </div>
+                {target ? (
+                  <span className="file-chip">
+                    {target.name} · {formatBytes(target.size)}
+                  </span>
+                ) : (
+                  <span className="file-chip">Drop audio or click to browse</span>
+                )}
+                <input
+                  type="file"
+                  accept="audio/*,video/*,.wav,.mp3,.m4a,.ogg,.webm"
+                  onChange={(e) => assign("target", e.target.files?.[0] ?? null)}
+                />
+              </label>
+
+              <div className="swap-arrow" aria-hidden="true">
+                <span>→</span>
+              </div>
+
+              <label
+                className={`drop${drag === "content" ? " drag" : ""}`}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setDrag("content");
+                }}
+                onDragLeave={() => setDrag(null)}
+                onDrop={(e) => onDrop("content", e)}
+              >
+                <div>
+                  <h3>2 · Content clip</h3>
+                  <p>The words and timing you want to keep. This is the performance that gets re-voiced.</p>
+                </div>
+                {content ? (
+                  <span className="file-chip">
+                    {content.name} · {formatBytes(content.size)}
+                  </span>
+                ) : (
+                  <span className="file-chip">Drop audio or click to browse</span>
+                )}
+                <input
+                  type="file"
+                  accept="audio/*,video/*,.wav,.mp3,.m4a,.ogg,.webm"
+                  onChange={(e) => assign("content", e.target.files?.[0] ?? null)}
+                />
+              </label>
+            </div>
+
+            <div className="studio-actions">
+              <button
+                className="btn btn-primary"
+                type="button"
+                disabled={!target || !content || busy}
+                onClick={runConvert}
+              >
+                {busy ? "Converting…" : "Convert voice"}
               </button>
-            )}
-            {(busy || progressLabel) && (
-              <div className="progress-wrap" aria-live="polite">
-                <div className="progress-label">
-                  <span>{progressLabel || "working"}</span>
-                  <span>{progressPct}%</span>
+              {resultUrl && (
+                <button className="btn btn-ghost" type="button" onClick={download}>
+                  Download WAV
+                </button>
+              )}
+              {(busy || progressLabel) && (
+                <div className="progress-wrap" aria-live="polite">
+                  <div className="progress-label">
+                    <span>{progressLabel || "working"}</span>
+                    <span>{progressPct}%</span>
+                  </div>
+                  <div className="progress-track">
+                    <div className="progress-fill" style={{ width: `${progressPct}%` }} />
+                  </div>
                 </div>
-                <div className="progress-track">
-                  <div className="progress-fill" style={{ width: `${progressPct}%` }} />
+              )}
+            </div>
+
+            {error && <div className="error">{error}</div>}
+
+            {resultUrl && (
+              <div className="result">
+                <div>
+                  <strong>Ready.</strong> Preview your swap, then download the WAV.
                 </div>
+                <audio controls src={resultUrl} />
               </div>
             )}
+
+            <p className="fineprint">
+              Use only voices you own or have permission to process. VoXShift is a creative tool—not a disguise for
+              fraud, impersonation without consent, or deepfake abuse.
+            </p>
           </div>
 
-          {error && <div className="error">{error}</div>}
-
-          {resultUrl && (
-            <div className="result">
-              <div>
-                <strong>Ready.</strong> Preview your swap, then download the WAV.
-              </div>
-              <audio controls src={resultUrl} />
-            </div>
-          )}
-
-          <p className="fineprint">
-            Use only voices you own or have permission to process. VoXShift is a creative tool—not a disguise for
-            fraud, impersonation without consent, or deepfake abuse.
-          </p>
+          <div className="studio-rail studio-rail-right">
+            <AdSlot slot="vox-studio-right-rail" format="rail" label="Advertisement · right of studio" />
+          </div>
         </div>
       </section>
 
