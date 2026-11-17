@@ -289,9 +289,10 @@ export async function convertVoice(opts: {
 
     const contentPitch = estimatePitchHz(content, sr);
     const targetPitch = estimatePitchHz(target, targetBuf.sampleRate);
+    // Shift content pitch toward the target (ratio < 1 lowers, > 1 raises).
     const pitchRatio = Math.min(
       1.6,
-      Math.max(0.65, contentPitch / Math.max(70, targetPitch)),
+      Math.max(0.65, targetPitch / Math.max(70, contentPitch)),
     );
 
     onProgress?.(35, "Replicating voice…");
