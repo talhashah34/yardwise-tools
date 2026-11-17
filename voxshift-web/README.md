@@ -35,6 +35,22 @@ npx wrangler pages deploy dist --project-name=voxshift
 
 `wrangler.toml`, `public/_headers`, and `public/_redirects` are included for Pages.
 
+## Sync to Windows `D:\yardwise-tools`
+
+After GitHub is updated, on your PC:
+
+```bat
+cd /d D:\yardwise-tools
+git fetch origin
+git checkout cursor/voxshift-web-1bc5
+git pull origin cursor/voxshift-web-1bc5
+cd voxshift-web
+npm install
+npm run dev
+```
+
+Or double-click `pull-to-D-yardwise-tools.bat` from this folder after copying it to `D:\yardwise-tools\voxshift-web\`.
+
 ## Stack
 
 - Vite + React + TypeScript
