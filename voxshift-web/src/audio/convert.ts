@@ -146,6 +146,32 @@ function estimatePitchHz(samples: Float32Array, sampleRate: number): number {
   return sampleRate / bestLag;
 }
 
+function lerpSample(buf: Float32Array, src: number): number {
+  const i0 = Math.floor(src);
+  const i1 = Math.min(buf.length - 1, i0 + 1);
+  const f = src - i0;
+  return buf[i0] * (1 - f) + buf[i1] * f;
+}
+
+/** Pitch-shift while keeping original duration (resample, then stretch back). */
+function pitchPreserveDuration(content: Float32Array, pitchRatio: number): Float32Array {
+  const pitchedLen = Math.max(1, Math.floor(content.length / pitchRatio));
+  const pitched = new Float32Array(pitchedLen);
+  for (let i = 0; i < pitchedLen; i++) {
+    pitched[i] = lerpSample(content, i * pitchRatio);
+  }
+  const out = new Float32Array(content.length);
+  if (pitchedLen === 1) {
+    out.fill(pitched[0]);
+    return out;
+  }
+  for (let i = 0; i < out.length; i++) {
+    const src = (i / Math.max(1, out.length - 1)) * (pitchedLen - 1);
+    out[i] = lerpSample(pitched, src);
+  }
+  return out;
+}
+
 function applyConversion(
   content: Float32Array,
   targetProfile: Float32Array,
@@ -158,11 +184,14 @@ function applyConversion(
   const hop = 512;
   const bins = fftSize / 2 + 1;
   const transfer = new Float32Array(bins);
+  // Emphasize speech formant region (~200Hz–4kHz); soften extremes
   for (let i = 0; i < bins; i++) {
-    transfer[i] = Math.min(
-      8,
-      Math.max(0.15, Math.pow(targetProfile[i] / contentProfile[i], 0.85)),
-    );
+    const hz = (i * sampleRate) / fftSize;
+    const speechWeight =
+      hz < 120 ? 0.35 : hz < 280 ? 0.7 : hz < 4000 ? 1 : hz < 7000 ? 0.55 : 0.25;
+    const raw = Math.pow(targetProfile[i] / contentProfile[i], 0.72);
+    const blended = 1 + (raw - 1) * speechWeight;
+    transfer[i] = Math.min(4.5, Math.max(0.22, blended));
   }
 
   const window = new Float32Array(fftSize);
@@ -170,16 +199,8 @@ function applyConversion(
     window[i] = 0.5 * (1 - Math.cos((2 * Math.PI * i) / (fftSize - 1)));
   }
 
-  // Time-domain pitch shift via resampling then STFT timbre paint
-  const pitchedLen = Math.max(1, Math.floor(content.length / pitchRatio));
-  const pitched = new Float32Array(pitchedLen);
-  for (let i = 0; i < pitchedLen; i++) {
-    const src = i * pitchRatio;
-    const i0 = Math.floor(src);
-    const i1 = Math.min(content.length - 1, i0 + 1);
-    const f = src - i0;
-    pitched[i] = content[i0] * (1 - f) + content[i1] * f;
-  }
+  onProgress?.(38, "Shifting pitch…");
+  const pitched = pitchPreserveDuration(content, pitchRatio);
 
   const out = new Float32Array(pitched.length + fftSize);
   const norm = new Float32Array(out.length);
@@ -206,7 +227,7 @@ function applyConversion(
       norm[start + i] += window[i] * window[i];
     }
     if (onProgress && frame % 8 === 0) {
-      onProgress(35 + (55 * frame) / total, "Replicating voice…");
+      onProgress(42 + (50 * frame) / total, "Transferring voice character…");
     }
   }
 
@@ -214,15 +235,24 @@ function applyConversion(
     if (norm[i] > 1e-6) out[i] /= norm[i];
   }
 
-  // Soft limit + match rough loudness
+  // Mild high-pass to clear mud + soft limit
+  let prev = 0;
   let peak = 1e-6;
-  for (let i = 0; i < pitched.length; i++) peak = Math.max(peak, Math.abs(out[i]));
-  const gain = 0.92 / peak;
+  const hp = new Float32Array(pitched.length);
+  for (let i = 0; i < pitched.length; i++) {
+    const x = out[i] || 0;
+    const y = x - prev + 0.995 * (hp[i - 1] || 0);
+    prev = x;
+    hp[i] = y;
+    peak = Math.max(peak, Math.abs(y));
+  }
+  const gain = 0.9 / peak;
   const final = new Float32Array(pitched.length);
   for (let i = 0; i < pitched.length; i++) {
-    final[i] = Math.tanh(out[i] * gain * 1.1);
+    // Mix a little original timing energy so speech stays intelligible
+    const mixed = hp[i] * 0.88 + pitched[i] * 0.12;
+    final[i] = Math.tanh(mixed * gain);
   }
-  void sampleRate;
   return final;
 }
 
