@@ -58,18 +58,12 @@ export default function App() {
   function assign(slot: Slot, file: File | null) {
     setError(null);
     if (file && !isMediaFile(file)) {
-      setError("Please upload an audio or video file (WAV, MP3, M4A, OGG, WebM\u2026).");
+      setError("Please upload an audio or video file (WAV, MP3, M4A, OGG, WebM…)."
+);
       return;
     }
     if (slot === "target") setTarget(file);
     else setContent(file);
-  }
-
-  function onDrop(slot: Slot, e: React.DragEvent) {
-    e.preventDefault();
-    setDrag(null);
-    const file = e.dataTransfer.files?.[0];
-    if (file) assign(slot, file);
   }
 
   async function runConvert() {
@@ -77,7 +71,7 @@ export default function App() {
     setBusy(true);
     setError(null);
     setProgressPct(5);
-    setProgressLabel("Reading clips\u2026");
+    setProgressLabel("Reading clips…");
     try {
       const { blob } = await convertVoice({
         targetFile: target,
@@ -109,6 +103,13 @@ export default function App() {
     a.href = resultUrl;
     a.download = "voxshift-swap.wav";
     a.click();
+  }
+
+  function onDrop(slot: Slot, e: React.DragEvent) {
+    e.preventDefault();
+    setDrag(null);
+    const file = e.dataTransfer.files?.[0];
+    if (file) assign(slot, file);
   }
 
   return (
@@ -238,7 +239,7 @@ export default function App() {
               disabled={!target || !content || busy}
               onClick={runConvert}
             >
-              {busy ? "Converting\u2026" : "Convert voice"}
+              {busy ? "Converting…" : "Convert voice"}
             </button>
             {resultUrl && (
               <button className="btn btn-ghost" type="button" onClick={download}>
@@ -339,7 +340,7 @@ export default function App() {
                 >
                   <span>{item.q}</span>
                   <span className="faq-chevron" aria-hidden="true">
-                    {open ? "\u2212" : "+"}
+                    {open ? "−" : "+"}
                   </span>
                 </button>
                 {open && <p className="faq-answer">{item.a}</p>}
