@@ -1,1 +1,1 @@
-PLACEHOLDER
+@/workspace/voxshift-web/src/App.tsx
