@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { convertVoice, isMediaFile } from "./audio/convert";
+import { demoSamples } from "./audio/demoSamples";
 import "./index.css";
 
 type Slot = "target" | "content";
+type DemoKey = "content" | "target" | "result";
 
 const FAQS = [
   {
@@ -31,10 +33,39 @@ const FAQS = [
   },
 ];
 
+const DEMO_CARDS: { key: DemoKey; label: string; blurb: string }[] = [
+  {
+    key: "content",
+    label: "Content clip",
+    blurb: "Words & timing you keep",
+  },
+  {
+    key: "target",
+    label: "Target voice",
+    blurb: "Character you want to lean into",
+  },
+  {
+    key: "result",
+    label: "Swapped result",
+    blurb: "Same line, shifted timbre",
+  },
+];
+
 function formatBytes(n: number) {
   if (n < 1024) return `${n} B`;
   if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
   return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function Waveform({ variant }: { variant: "content" | "target" | "result" | "hero" }) {
+  const bars = variant === "hero" ? 28 : 18;
+  return (
+    <div className={`wave wave-${variant}`} aria-hidden="true">
+      {Array.from({ length: bars }, (_, i) => (
+        <span key={i} style={{ animationDelay: `${i * 0.05}s` }} />
+      ))}
+    </div>
+  );
 }
 
 export default function App() {
@@ -47,11 +78,14 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [playingDemo, setPlayingDemo] = useState<DemoKey | null>(null);
   const resultRef = useRef<string | null>(null);
+  const demoAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     return () => {
       if (resultRef.current) URL.revokeObjectURL(resultRef.current);
+      demoAudioRef.current?.pause();
     };
   }, []);
 
@@ -111,14 +145,30 @@ export default function App() {
     a.click();
   }
 
+  function playDemo(key: DemoKey) {
+    demoAudioRef.current?.pause();
+    if (playingDemo === key) {
+      setPlayingDemo(null);
+      return;
+    }
+    const audio = new Audio(demoSamples[key]);
+    demoAudioRef.current = audio;
+    setPlayingDemo(key);
+    audio.onended = () => setPlayingDemo(null);
+    audio.play().catch(() => setPlayingDemo(null));
+  }
+
   return (
     <div className="page">
       <header className="nav">
         <a className="nav-brand" href="#top" aria-label="VoXShift home">
-          <img src="/logo.svg" alt="" width={36} height={36} />
+          <span className="brand-orb" aria-hidden="true">
+            <img src="/logo.svg" alt="" width={36} height={36} />
+          </span>
           VoXShift
         </a>
         <nav className="nav-links" aria-label="Primary">
+          <a href="#preview">Preview</a>
           <a href="#studio">Studio</a>
           <a href="#how">How to use</a>
           <a href="#where">Where to use</a>
@@ -140,10 +190,28 @@ export default function App() {
           />
         </div>
         <div className="hero-glow" aria-hidden="true" />
+        <div className="hero-swap-viz" aria-hidden="true">
+          <div className="hero-lane">
+            <span className="lane-label">Content</span>
+            <Waveform variant="content" />
+          </div>
+          <div className="hero-swap-pulse">
+            <span className="swap-ring" />
+            <span className="swap-ring delay" />
+            <span className="swap-core">⇧</span>
+          </div>
+          <div className="hero-lane">
+            <span className="lane-label">Shifted</span>
+            <Waveform variant="result" />
+          </div>
+        </div>
         <div className="hero-copy">
-          <div className="eyebrow">Premium voice swap · Free forever</div>
+          <div className="eyebrow">
+            <span className="eyebrow-dot" aria-hidden="true" />
+            Premium voice swap · Free forever
+          </div>
           <h1 className="brand-mark">
-            VoX<span>Shift</span>
+            VoX<span className="shift-glow">Shift</span>
           </h1>
           <p className="hero-line">Swap any voice onto your clip—fast, private, unlimited.</p>
           <p className="hero-sub">
@@ -153,11 +221,71 @@ export default function App() {
             <a className="btn btn-primary" href="#studio">
               Launch Swap Studio
             </a>
-            <a className="btn btn-ghost" href="#how">
-              See how it works
+            <a className="btn btn-ghost" href="#preview">
+              Hear an example
             </a>
           </div>
           <p className="scroll-hint">Scroll for the studio ↓</p>
+        </div>
+      </section>
+
+      <section className="section" id="preview">
+        <div className="section-head">
+          <h2>Example preview</h2>
+          <p>
+            Hear the idea in three clips: content, target, then the swapped result. Synthetic demos — your real uploads
+            will sound like your voices.
+          </p>
+        </div>
+
+        <div className="preview-stage">
+          <div className="preview-flow" aria-hidden="true">
+            <Waveform variant="content" />
+            <div className="preview-morph">
+              <span className="morph-bar" />
+              <span className="morph-label">voice shift</span>
+            </div>
+            <Waveform variant="result" />
+          </div>
+
+          <div className="preview-grid">
+            {DEMO_CARDS.map((card, i) => (
+              <article
+                key={card.key}
+                className={`preview-card preview-${card.key}${playingDemo === card.key ? " playing" : ""}`}
+                style={{ animationDelay: `${0.08 * i}s` }}
+              >
+                <div className="preview-card-top">
+                  <div>
+                    <p className="preview-kicker">{String(i + 1).padStart(2, "0")}</p>
+                    <h3>{card.label}</h3>
+                    <p>{card.blurb}</p>
+                  </div>
+                  <Waveform variant={card.key === "target" ? "target" : card.key} />
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-ghost preview-play"
+                  onClick={() => playDemo(card.key)}
+                  aria-pressed={playingDemo === card.key}
+                >
+                  {playingDemo === card.key ? "Stop" : "Play"}
+                </button>
+                <audio
+                  className="preview-audio"
+                  controls
+                  preload="metadata"
+                  src={demoSamples[card.key]}
+                  onPlay={() => setPlayingDemo(card.key)}
+                  onPause={() => setPlayingDemo((cur) => (cur === card.key ? null : cur))}
+                  onEnded={() => setPlayingDemo((cur) => (cur === card.key ? null : cur))}
+                />
+              </article>
+            ))}
+          </div>
+          <p className="fineprint preview-note">
+            Demo tones are illustrative. In Swap Studio, your uploaded target + content drive the real conversion.
+          </p>
         </div>
       </section>
 
@@ -200,7 +328,7 @@ export default function App() {
             </label>
 
             <div className="swap-arrow" aria-hidden="true">
-              →
+              <span>→</span>
             </div>
 
             <label
