@@ -1,1 +1,1 @@
-LOAD_ME
+@include:/workspace/voxshift-web/src/App.tsx
