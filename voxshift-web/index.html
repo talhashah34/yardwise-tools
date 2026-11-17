@@ -2,13 +2,133 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VoXShift — Free AI Voice Cloning | Speech to Speech Converter</title>
     <meta
       name="description"
-      content="VoXShift — change your voice live in the browser. Pitch, robot, reverb, and more. No install."
+      content="Free unlimited AI voice cloning online. Upload a target voice and a content clip — VoXShift replicates that voice onto your audio. Fast speech-to-speech conversion in your browser. No install."
     />
-    <title>VoXShift — AI Voice Changer</title>
+    <meta
+      name="keywords"
+      content="ai voice cloning, free ai voice changer, speech to speech, voice conversion, clone voice from sample, change voice in video, free voice cloning online, ai voice changer free, voice swap"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="author" content="VoXShift" />
+    <meta name="theme-color" content="#0B0E0A" />
+    <meta name="application-name" content="VoXShift" />
+    <link rel="canonical" href="https://voxshift.pages.dev/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="VoXShift" />
+    <meta property="og:title" content="VoXShift — Free AI Voice Cloning" />
+    <meta
+      property="og:description"
+      content="Upload a voice. Upload a clip. Get the clip in that voice. Free unlimited speech-to-speech replication."
+    />
+    <meta property="og:image" content="https://voxshift.pages.dev/og-cover.jpg" />
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:url" content="https://voxshift.pages.dev/" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VoXShift — Free AI Voice Cloning" />
+    <meta
+      name="twitter:description"
+      content="Upload a voice. Upload a clip. Get the clip in that voice. Free unlimited."
+    />
+    <meta name="twitter:image" content="https://voxshift.pages.dev/og-cover.jpg" />
+
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="apple-touch-icon" href="/logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Syne:wght@600;700;800&family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "VoXShift",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web",
+        "browserRequirements": "Requires JavaScript and Web Audio API",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Free unlimited AI voice cloning. Upload a target voice sample and a content clip to replicate that voice onto your audio with browser-side speech-to-speech conversion.",
+        "url": "https://voxshift.pages.dev/",
+        "image": "https://voxshift.pages.dev/og-cover.jpg",
+        "featureList": [
+          "Speech-to-speech voice conversion",
+          "Clone voice from audio sample",
+          "Two-upload Swap Studio",
+          "Free unlimited conversions",
+          "Client-side private processing"
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is VoXShift really free and unlimited?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Swap Studio runs in your browser with no account, no credits, and no clip length paywall. Conversion happens on your device."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you keep a library of celebrity or preset voices?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. You upload the target voice sample yourself and the content clip you want spoken. There is no celebrity voice pack and no shared voice marketplace."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does the voice swap work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VoXShift analyzes the spectral character of your target sample, then transfers pitch contour and timbre cues onto your content clip with a client-side STFT pipeline. The result downloads as a WAV file."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does my audio leave my computer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Processing is designed to stay in the browser. Your uploads are not sent to a VoXShift server for conversion."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What file types work best?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use clear mono or stereo speech in WAV, MP3, M4A, or OGG. Clean target samples of 5–20 seconds usually give the most stable timbre match."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where can I use the output?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Creators use swaps for demos, narration drafts, prototype character VO, accessibility experiments, language practice, and private creative tools—always with permission from the voice owner."
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

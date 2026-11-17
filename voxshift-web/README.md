@@ -1,17 +1,10 @@
-# VoXShift (Web)
+# VoXShift
 
-Browser voice changer — same idea as the Python desktop app, running with the Web Audio API.
+Premium single-page **Swap Studio** — free unlimited speech-to-speech voice conversion in the browser.
 
-## What it does
+Upload a **target voice** and a **content clip**. VoXShift transfers timbre and pitch cues onto your clip and downloads a WAV. No account. No celebrity library. Processing stays client-side.
 
-1. Asks for microphone access
-2. Processes your voice live in the browser (pitch, formant, robot, reverb, echo, warmth, gate)
-3. Plays the changed voice back to your speakers/headphones
-4. Lets you record and download a clip
-
-No audio is uploaded for the live effect — processing stays on your device.
-
-## Run locally
+## Local
 
 ```bash
 cd voxshift-web
@@ -19,22 +12,31 @@ npm install
 npm run dev
 ```
 
-Open http://127.0.0.1:4871
-
-Use **headphones** to avoid feedback.
-
-## Desktop vs Web
-
-| | Desktop (`D:\ai-voice-changer`) | Web (`voxshift-web`) |
-|---|---|---|
-| Install | Python + bat | None (just open site) |
-| Processing | Python / NumPy | Browser AudioWorklet |
-| Live Discord mic | Easier with virtual cable | Needs virtual cable too, or use Record/download |
-| Sell as | Downloadable app | Website / SaaS |
-
-## Build
+Dev server: `http://127.0.0.1:4871`
 
 ```bash
 npm run build
 npm run preview
 ```
+
+## Cloudflare Pages
+
+1. Connect this repo (or the `voxshift-web` folder as the project root).
+2. Build command: `npm run build`
+3. Output directory: `dist`
+4. Node version: 20+
+
+Optional CLI deploy from this folder:
+
+```bash
+npm run build
+npx wrangler pages deploy dist --project-name=voxshift
+```
+
+`wrangler.toml`, `public/_headers`, and `public/_redirects` are included for Pages.
+
+## Stack
+
+- Vite + React + TypeScript
+- Client-side STFT voice conversion (`src/audio/convert.ts`)
+- SEO: meta, Open Graph, Twitter, JSON-LD (WebApplication + FAQPage), robots, sitemap
