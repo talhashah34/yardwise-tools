@@ -1,0 +1,22 @@
+import { resultP0 } from "./result_p0";
+import { resultP1 } from "./result_p1";
+import { resultP2 } from "./result_p2";
+import { resultP3 } from "./result_p3";
+import { resultP4 } from "./result_p4";
+import { resultP5 } from "./result_p5";
+import { resultP6 } from "./result_p6";
+import { resultP7 } from "./result_p7";
+import { resultP8 } from "./result_p8";
+import { resultP9 } from "./result_p9";
+import { resultP10 } from "./result_p10";
+import { resultP11 } from "./result_p11";
+import { resultP12 } from "./result_p12";
+import { resultP13 } from "./result_p13";
+import { resultP14 } from "./result_p14";
+import { resultP15 } from "./result_p15";
+import { resultP16 } from "./result_p16";
+import { resultP17 } from "./result_p17";
+import { resultP18 } from "./result_p18";
+import { resultP19 } from "./result_p19";
+
+export const resultSample = resultP0 + resultP1 + resultP2 + resultP3 + resultP4 + resultP5 + resultP6 + resultP7 + resultP8 + resultP9 + resultP10 + resultP11 + resultP12 + resultP13 + resultP14 + resultP15 + resultP16 + resultP17 + resultP18 + resultP19;
