@@ -40,11 +40,18 @@ function formatBytes(n: number) {
   return `${(n / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-async function dataUrlToFile(dataUrl: string, name: string): Promise<File> {
-  const res = await fetch(dataUrl);
+async function urlToFile(url: string, name: string): Promise<File> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Could not load ${name}`);
   const blob = await res.blob();
   return new File([blob], name, { type: blob.type || "audio/wav" });
 }
+
+/** Prefer public example files (easy to replace); fall back to embeds. */
+const DEMO_URLS = {
+  content: "/examples/content-demo.wav",
+  target: "/examples/target-demo.wav",
+} as const;
 
 function Waveform({
   variant,
@@ -171,10 +178,19 @@ export default function App() {
     setDemoPct(5);
     setDemoLabel("Loading sample clips…");
     try {
-      const [contentFile, targetFile] = await Promise.all([
-        dataUrlToFile(demoSamples.content, "demo-content.wav"),
-        dataUrlToFile(demoSamples.target, "demo-target.wav"),
-      ]);
+      let contentFile: File;
+      let targetFile: File;
+      try {
+        [contentFile, targetFile] = await Promise.all([
+          urlToFile(DEMO_URLS.content, "content-demo.wav"),
+          urlToFile(DEMO_URLS.target, "target-demo.wav"),
+        ]);
+      } catch {
+        [contentFile, targetFile] = await Promise.all([
+          urlToFile(demoSamples.content, "content-demo.wav"),
+          urlToFile(demoSamples.target, "target-demo.wav"),
+        ]);
+      }
       const { blob } = await convertVoice({
         contentFile,
         targetFile,
@@ -326,12 +342,12 @@ export default function App() {
                   onClick={() =>
                     playingDemo === "content"
                       ? stopDemoAudio()
-                      : playTrack("content", demoSamples.content)
+                      : playTrack("content", DEMO_URLS.content)
                   }
                 >
                   {playingDemo === "content" ? "Stop" : "Play before"}
                 </button>
-                <audio className="preview-audio" controls preload="metadata" src={demoSamples.content} />
+                <audio className="preview-audio" controls preload="metadata" src={DEMO_URLS.content} />
               </article>
 
               <article className={`compare-card${playingDemo === "target" ? " playing" : ""}`}>
@@ -347,12 +363,12 @@ export default function App() {
                   type="button"
                   className="btn btn-ghost"
                   onClick={() =>
-                    playingDemo === "target" ? stopDemoAudio() : playTrack("target", demoSamples.target)
+                    playingDemo === "target" ? stopDemoAudio() : playTrack("target", DEMO_URLS.target)
                   }
                 >
                   {playingDemo === "target" ? "Stop" : "Play target"}
                 </button>
-                <audio className="preview-audio" controls preload="metadata" src={demoSamples.target} />
+                <audio className="preview-audio" controls preload="metadata" src={DEMO_URLS.target} />
               </article>
 
               <article
@@ -389,8 +405,8 @@ export default function App() {
             </div>
 
             <p className="fineprint preview-note">
-              Samples are synthetic so anyone can test instantly. Your own uploads in Swap Studio will sound like your
-              voices — this preview proves the conversion pipeline itself.
+              Demo clips live in <code>public/examples/</code> — swap in your own speech WAVs anytime. The button runs
+              the same engine as Swap Studio in your browser.
             </p>
           </div>
         </div>
