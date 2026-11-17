@@ -49,7 +49,9 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem clamp(1rem, 4vw, 2.5rem);
+  gap: 1rem;
+  padding: 1rem clamp(1.1rem, 4vw, 2.5rem);
+  padding-right: max(clamp(1.1rem, 4vw, 2.5rem), 1.25rem);
   backdrop-filter: blur(14px);
   background: linear-gradient(180deg, rgba(11, 14, 10, 0.88), rgba(11, 14, 10, 0.35));
   border-bottom: 1px solid transparent;
@@ -555,30 +557,48 @@ a {
   gap: 0.65rem;
 }
 
-.faq details {
+.faq-item {
   border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 0.95rem 1.1rem;
   background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
 }
 
-.faq summary {
-  cursor: pointer;
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
   font-family: var(--display);
   font-weight: 700;
-  list-style: none;
+  cursor: pointer;
+  padding: 1rem 1.15rem;
+  min-height: 52px;
 }
 
-.faq summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq details[open] summary {
+.faq-item.open .faq-trigger {
   color: var(--amber);
 }
 
-.faq details p {
-  margin: 0.7rem 0 0;
+.faq-chevron {
+  flex-shrink: 0;
+  width: 1.5rem;
+  text-align: center;
+  color: var(--amber);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.faq-answer {
+  margin: 0;
+  padding: 0 1.15rem 1.05rem;
   color: var(--muted);
   line-height: 1.5;
 }

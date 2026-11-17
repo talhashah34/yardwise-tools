@@ -46,6 +46,7 @@ export default function App() {
   const [progressLabel, setProgressLabel] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const resultRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -57,7 +58,8 @@ export default function App() {
   function assign(slot: Slot, file: File | null) {
     setError(null);
     if (file && !isMediaFile(file)) {
-      setError("Please upload an audio or video file (WAV, MP3, M4A, OGG, WebM…).");
+      setError("Please upload an audio or video file (WAV, MP3, M4A, OGG, WebM…)."
+);
       return;
     }
     if (slot === "target") setTarget(file);
@@ -326,12 +328,25 @@ export default function App() {
           <p>Straight answers for a free, unlimited, browser-side voice swap.</p>
         </div>
         <div className="faq">
-          {FAQS.map((item) => (
-            <details key={item.q}>
-              <summary>{item.q}</summary>
-              <p>{item.a}</p>
-            </details>
-          ))}
+          {FAQS.map((item, i) => {
+            const open = openFaq === i;
+            return (
+              <div key={item.q} className={`faq-item${open ? " open" : ""}`}>
+                <button
+                  type="button"
+                  className="faq-trigger"
+                  aria-expanded={open}
+                  onClick={() => setOpenFaq(open ? null : i)}
+                >
+                  <span>{item.q}</span>
+                  <span className="faq-chevron" aria-hidden="true">
+                    {open ? "−" : "+"}
+                  </span>
+                </button>
+                {open && <p className="faq-answer">{item.a}</p>}
+              </div>
+            );
+          })}
         </div>
       </section>
 
