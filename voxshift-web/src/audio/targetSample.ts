@@ -5,16 +5,5 @@ import { targetP3 } from "./target_p3";
 import { targetP4 } from "./target_p4";
 import { targetP5 } from "./target_p5";
 import { targetP6 } from "./target_p6";
-import { targetP7 } from "./target_p7";
-import { targetP8 } from "./target_p8";
-import { targetP9 } from "./target_p9";
-import { targetP10 } from "./target_p10";
-import { targetP11 } from "./target_p11";
-import { targetP12 } from "./target_p12";
-import { targetP13 } from "./target_p13";
-import { targetP14 } from "./target_p14";
-import { targetP15 } from "./target_p15";
-import { targetP16 } from "./target_p16";
-import { targetP17 } from "./target_p17";
 
-export const targetSample = targetP0 + targetP1 + targetP2 + targetP3 + targetP4 + targetP5 + targetP6 + targetP7 + targetP8 + targetP9 + targetP10 + targetP11 + targetP12 + targetP13 + targetP14 + targetP15 + targetP16 + targetP17;
+export const targetSample = targetP0 + targetP1 + targetP2 + targetP3 + targetP4 + targetP5 + targetP6;
