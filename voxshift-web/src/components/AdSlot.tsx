@@ -1,4 +1,4 @@
-type AdFormat = "leaderboard" | "rectangle" | "infeed";
+type AdFormat = "leaderboard" | "rectangle" | "infeed" | "rail";
 
 type Props = {
   /** Stable slot id for future AdSense / Cloudflare ad mapping */
