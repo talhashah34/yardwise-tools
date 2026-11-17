@@ -1,1 +1,1 @@
-@/workspace/voxshift-web/src/App.tsx
+LOAD_FROM_/tmp/PUSH_NOW.json
