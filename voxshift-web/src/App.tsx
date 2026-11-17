@@ -57,8 +57,7 @@ export default function App() {
   function assign(slot: Slot, file: File | null) {
     setError(null);
     if (file && !isMediaFile(file)) {
-      setError("Please upload an audio or video file (WAV, MP3, M4A, OGG, WebM…)."
-);
+      setError("Please upload an audio or video file (WAV, MP3, M4A, OGG, WebM…).");
       return;
     }
     if (slot === "target") setTarget(file);
