@@ -1,1 +1,1 @@
-LOAD_FROM_/tmp/create_voxshift-web_src_App.tsx.json:content
+@workspace/voxshift-web/src/App.tsx
